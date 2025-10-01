@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: student
+      POSTGRES_PASSWORD: homework
+      POSTGRES_DB: test_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - dz1_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: student@example.com
+      PGADMIN_DEFAULT_PASSWORD: homework
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - dz1_network
+
+volumes:
+  postgres_data:
+
+networks:
+  dz1_network:
+    driver: bridge
